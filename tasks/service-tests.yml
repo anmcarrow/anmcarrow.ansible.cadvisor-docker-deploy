@@ -1,0 +1,11 @@
+---
+
+- name: Test HTTP port
+  wait_for:
+    port: "{{ item }}"
+    host: "{{ ansible_default_ipv4.address }}"
+    timeout: 120
+    msg: "Check HTTP(S) ports"
+  with_items:
+    - "{{ cadvisor_http_published_port }}"
+  tags: cadvisor,test

@@ -1,0 +1,18 @@
+---
+
+- name: "Run the local Cadvisor container"
+  docker_container:
+    name: "{{ cadvisor_container_name }}"
+    hostname: "{{ ansible_hostname }}"
+    state: started
+    pull: yes
+    restart: yes
+    recreate: yes
+    restart_policy: "unless-stopped"
+    image: "{{ docker_cadvisor_image }}"
+    exposed_ports:
+      - "{{ cadvisor_http_port }}"
+    published_ports:
+      - "{{ cadvisor_http_published_port }}:{{ cadvisor_http_port }}"
+    volumes: "{{ cadvisor_volumes }}"
+  tags: cadvisor,run
